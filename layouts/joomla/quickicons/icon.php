@@ -47,8 +47,14 @@ if (!empty($displayData['class']))
 	$tmp[] = $this->escape($displayData['class']);
 }
 
+// Add the name to make it unique
+if (!empty($displayData['name']))
+{
+	$tmp[] = ' quickicon-' . $this->escape(strtolower(Text::_($displayData['name'])));
+}
+
 // Make the class string
-$class = !empty($tmp) ? ' class="' . implode(' ', array_unique($tmp)) . '"' : '';
+$class = !empty($tmp) ? ' class="' . trim(implode(' ', array_unique($tmp))) . '"' : '';
 
 ?>
 <?php // If it is a button with two links: make it a list
@@ -57,7 +63,7 @@ $class = !empty($tmp) ? ' class="' . implode(' ', array_unique($tmp)) . '"' : ''
 		<ul class="list-unstyled d-flex w-100">
 			<li class="quickicon flex-grow-1">
 	<?php else: ?>		
-		<li class="quickicon quickicon-single col mb-3">
+		<li class="quickicon quickicon-single col mb-3 quickicon_">
 	<?php endif; ?>	
 
 		<a <?php echo $id . $class; ?> href="<?php echo $displayData['link']; ?>"<?php echo $target . $onclick . $title; ?>>
