@@ -791,24 +791,27 @@ final class Blog extends CMSPlugin
         }
 
         // Detect language to be used.
-        $language   = Multilanguage::isEnabled() ? $this->getApplication()->getLanguage()->getTag() : '*';
-        $langSuffix = ($language !== '*') ? ' (' . $language . ')' : '';
+        $language           = Multilanguage::isEnabled() ? $this->getApplication()->getLanguage()->getTag() : '*';
+        $langSuffixTitle    = ($language !== '*') ? ' (' . $language . ')' : '';
+        $langSuffixMenutype = ($language !== '*') ? '-' . $language : '';
+
+        // Maximum length of menutype 24 - 1 for prefix - lenght of language code suffix
+        $menutypeBaseLength = 23 - strlen($langSuffixMenutype);
 
         // Create the menu types.
         $menuTable = new \Joomla\Component\Menus\Administrator\Table\MenuTypeTable($this->getDatabase());
         $menuTypes = [];
 
         for ($i = 0; $i <= 2; $i++) {
-            $menu = [
+            // Title without language code suffix
+            $titleBase = $this->getApplication()->getLanguage()->_('PLG_SAMPLEDATA_BLOG_SAMPLEDATA_MENUS_MENU_' . $i . '_TITLE');
+
+            $menu  = [
                 'id'          => 0,
-                'title'       => $this->getApplication()->getLanguage()->_('PLG_SAMPLEDATA_BLOG_SAMPLEDATA_MENUS_MENU_' . $i . '_TITLE') . $langSuffix,
+                'title'       => $titleBase . $langSuffixTitle;
                 'description' => $this->getApplication()->getLanguage()->_('PLG_SAMPLEDATA_BLOG_SAMPLEDATA_MENUS_MENU_' . $i . '_DESCRIPTION'),
+                'menutype'    => $i . HTMLHelper::_('string.truncate', $titleBase, $menutypeBaseLength, true, false) . $langSuffixMenutype;
             ];
-
-            // Calculate menutype. The number of characters allowed is 24.
-            $type = HTMLHelper::_('string.truncate', $menu['title'], 16, true, false);
-
-            $menu['menutype'] = $i . $type;
 
             try {
                 $menuTable->load();
