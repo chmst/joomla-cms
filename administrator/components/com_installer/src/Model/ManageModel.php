@@ -347,7 +347,8 @@ class ManageModel extends InstallerModel
                 ->bind(':type', $type);
         }
 
-        if ($clientId !== '') {
+        // Filter by client but ignore the filter for plugins.
+        if ($clientId !== '' && $type !== 'plugin') {
             $clientId = (int) $clientId;
             $query->where($db->quoteName('client_id') . ' = :clientid')
                 ->bind(':clientid', $clientId, ParameterType::INTEGER);
