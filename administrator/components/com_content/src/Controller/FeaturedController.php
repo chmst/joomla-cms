@@ -6,6 +6,8 @@
  *
  * @copyright   (C) 2009 Open Source Matters, Inc. <https://www.joomla.org>
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 
+ * @deprecated   5.2 will be removed in 6.0. Use \Joomla\Component\Content\Administrator\Controller\ArticlesController instead
  */
 
 namespace Joomla\Component\Content\Administrator\Controller;

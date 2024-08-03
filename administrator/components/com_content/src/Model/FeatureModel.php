@@ -6,6 +6,8 @@
  *
  * @copyright   (C) 2010 Open Source Matters, Inc. <https://www.joomla.org>
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 
+ * @deprecated   5.2 will be removed in 6.0. Use \Joomla\Component\Content\Administrator\Controller\ArticlesController instead
  */
 
 namespace Joomla\Component\Content\Administrator\Model;
@@ -18,6 +20,8 @@ namespace Joomla\Component\Content\Administrator\Model;
  * Feature model.
  *
  * @since  1.6
+ * 
+ * @deprecated   5.2 will be removed in 6.0. Use \Joomla\Component\Content\Administrator\Controller\ArticlesController instead
  */
 class FeatureModel extends ArticleModel
 {
