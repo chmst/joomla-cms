@@ -116,6 +116,7 @@ class HtmlView extends BaseHtmlView
         $this->activeFilters = $this->get('ActiveFilters');
         $this->vote          = PluginHelper::isEnabled('content', 'vote');
         $this->hits          = ComponentHelper::getParams('com_content')->get('record_hits', 1) == 1;
+        $featured            = $this->state->get('filter.featured');
 
         if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
             $this->setLayout('emptystate');
@@ -128,7 +129,7 @@ class HtmlView extends BaseHtmlView
         }
 
         // Check for errors.
-        if (\count($errors = $this->get('Errors')) || $this->transitions === false) {
+        if (\count($errors = $this->get('Errors')) || ($this->transitions === false && $featured === '1')) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -142,8 +143,10 @@ class HtmlView extends BaseHtmlView
                 $this->filterForm->removeField('language', 'filter');
             }
         } else {
-            // In article associations modal we need to remove language filter if forcing a language.
-            // We also need to change the category filter to show show categories with All or the forced language.
+            /*
+             * In article associations modal we need to remove language filter if forcing a language.
+             * We also need to change the category filter to show categories with All or the forced language.
+             */
             if ($forcedLanguage = Factory::getApplication()->getInput()->get('forcedLanguage', '', 'CMD')) {
                 // If the language is forced we can't allow to select the language, so transform the language selector filter into a hidden field.
                 $languageXml = new \SimpleXMLElement('<field name="language" type="hidden" default="' . $forcedLanguage . '" />');
@@ -169,11 +172,16 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar()
     {
-        $canDo   = ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
-        $user    = $this->getCurrentUser();
-        $toolbar = Toolbar::getInstance();
+        $canDo    = ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
+        $user     = $this->getCurrentUser();
+        $featured = $this->state->get('filter.featured');
+        $toolbar  = Toolbar::getInstance();
 
-        ToolbarHelper::title(Text::_('COM_CONTENT_ARTICLES_TITLE'), 'copy article');
+        if ($featured === '1') {
+			ToolbarHelper::title(Text::_('COM_CONTENT_FEATURED_TITLE'), 'star featured');
+		} else{
+			ToolbarHelper::title(Text::_('COM_CONTENT_ARTICLES_TITLE'), 'copy article');
+		}
 
         if ($canDo->get('core.create') || \count($user->getAuthorisedCategories('com_content', 'core.create')) > 0) {
             $toolbar->addNew('article.add');
@@ -235,6 +243,7 @@ class HtmlView extends BaseHtmlView
                 $user->authorise('core.create', 'com_content')
                 && $user->authorise('core.edit', 'com_content')
                 && $user->authorise('core.execute.transition', 'com_content')
+                && $featured !== '1'
             ) {
                 $childBar->popupButton('batch', 'JTOOLBAR_BATCH')
                     ->popupType('inline')
@@ -255,7 +264,11 @@ class HtmlView extends BaseHtmlView
         if ($user->authorise('core.admin', 'com_content') || $user->authorise('core.options', 'com_content')) {
             $toolbar->preferences('com_content');
         }
-
-        $toolbar->help('Articles');
+ 
+        if ($featured === '1') {
+			$toolbar->help('Articles:_Featured');
+		} else{
+			$toolbar->help('Articles');
+		}
     }
 }

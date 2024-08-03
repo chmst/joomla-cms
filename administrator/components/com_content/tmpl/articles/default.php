@@ -37,7 +37,9 @@ $user      = $this->getCurrentUser();
 $userId    = $user->id;
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$saveOrder = $listOrder == 'a.ordering';
+$featured  = $this->state->get('filter.featured');
+$orderName = $featured === '1' ? 'fp.ordering' : 'a.ordering';
+$saveOrder = $listOrder == $orderName;
 
 if (strpos($listOrder, 'publish_up') !== false) {
     $orderingColumn = 'publish_up';
@@ -76,7 +78,7 @@ $assoc = Associations::isEnabled();
             <div id="j-main-container" class="j-main-container">
                 <?php
                 // Search tools bar
-                echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+                echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this, 'options' => ['selectorFieldName' => 'featured']));
                 ?>
                 <?php if (empty($this->items)) : ?>
                     <div class="alert alert-info">
@@ -86,7 +88,7 @@ $assoc = Associations::isEnabled();
                 <?php else : ?>
                     <table class="table itemList" id="articleList">
                         <caption class="visually-hidden">
-                            <?php echo Text::_('COM_CONTENT_ARTICLES_TABLE_CAPTION'); ?>,
+                        <?php echo $featured === '1' ? Text::_('COM_CONTENT_FEATURED_TABLE_CAPTION') : Text::_('COM_CONTENT_ARTICLES_TABLE_CAPTION'); ?>,
                             <span id="orderedBy"><?php echo Text::_('JGLOBAL_SORTED_BY'); ?> </span>,
                             <span id="filteredBy"><?php echo Text::_('JGLOBAL_FILTERED_BY'); ?></span>
                         </caption>
@@ -99,13 +101,13 @@ $assoc = Associations::isEnabled();
                                     <?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
                                 </th>
                                 <?php if ($workflow_enabled) : ?>
-                                <th scope="col" class="w-1 text-center">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'JSTAGE', 'ws.title', $listDirn, $listOrder); ?>
-                                </th>
+                                    <th scope="col" class="w-1 text-center">
+                                        <?php echo HTMLHelper::_('searchtools.sort', 'JSTAGE', 'ws.title', $listDirn, $listOrder); ?>
+                                    </th>
                                 <?php endif; ?>
-                                <th scope="col" class="w-1 text-center d-none d-md-table-cell">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'JFEATURED', 'a.featured', $listDirn, $listOrder); ?>
-                                </th>
+								<th scope="col" class="w-1 text-center d-none d-md-table-cell">
+									<?php echo $featured === '1' ? Text::_('JFEATURED') : HTMLHelper::_('searchtools.sort', 'JFEATURED', 'a.featured', $listDirn, $listOrder); ?>
+								</th>
                                 <th scope="col" class="w-1 text-center">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                                 </th>
@@ -390,7 +392,7 @@ $assoc = Associations::isEnabled();
                 <?php endif; ?>
 
                 <?php if ($workflow_enabled) : ?>
-                <input type="hidden" name="transition_id" value="">
+                    <input type="hidden" name="transition_id" value="">
                 <?php endif; ?>
 
                 <input type="hidden" name="task" value="">

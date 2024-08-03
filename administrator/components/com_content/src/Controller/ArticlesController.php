@@ -157,4 +157,29 @@ class ArticlesController extends AdminController
 
         echo new JsonResponse($result);
     }
+
+    /**
+     * Method to get the number of published featured articles for quickicons
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public function getQuickiconFeatured()
+    {
+        $model = $this->getModel('articles');
+
+        $model->setState('filter.published', 1);
+        $model->setState('filter.featured', 1);
+
+        $amount = (int) $model->getTotal();
+
+        $result = [];
+
+        $result['amount'] = $amount;
+        $result['sronly'] = Text::plural('COM_CONTENT_FEATURED_N_QUICKICON_SRONLY', $amount);
+        $result['name']   = Text::plural('COM_CONTENT_FEATURED_N_QUICKICON', $amount);
+
+        echo new JsonResponse($result);
+    }
 }
