@@ -112,9 +112,10 @@
 		/>
 
 		<field
-			name="upload_mime"
+			name="upload_mime"rdst
 			type="textarea"
 			label="COM_MEDIA_FIELD_LEGAL_MIME_TYPES_LABEL"
+			rows="4"
 			description="COM_MEDIA_FIELD_LEGAL_MIME_TYPES_DESC"
 			default="image/jpeg,image/gif,image/png,image/bmp,image/webp,image/avif,audio/ogg,audio/mpeg,audio/mp4,video/mp4,video/mpeg,video/quicktime,video/webm,application/msword,application/excel,application/pdf,application/powerpoint,text/plain,application/x-zip"
 			showon="restrict_uploads:1"
