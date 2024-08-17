@@ -112,7 +112,7 @@
 		/>
 
 		<field
-			name="upload_mime"rdst
+			name="upload_mime"
 			type="textarea"
 			label="COM_MEDIA_FIELD_LEGAL_MIME_TYPES_LABEL"
 			rows="4"
