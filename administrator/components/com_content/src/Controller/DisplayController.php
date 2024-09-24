@@ -50,6 +50,13 @@ class DisplayController extends BaseController
         $layout = $this->input->get('layout', 'articles');
         $id     = $this->input->getInt('id');
 
+        // Check for old featured view.
+        if ($view == 'featured') {
+            $this->setRedirect(Route::_('index.php?option=com_content&view=articles&featured=1', false));
+
+            return false;
+        }
+
         // Check for edit form.
         if ($view == 'article' && $layout == 'edit' && !$this->checkEditId('com_content.edit.article', $id)) {
             // Somehow the person just went to the form - we don't allow that.
