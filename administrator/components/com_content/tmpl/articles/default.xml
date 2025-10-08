@@ -25,7 +25,7 @@
 			/>
 
 			<field
-				name="featured"
+				name="filter_featured"
 				type="list"
 				label="JFEATURED"
 				filtermode="selector"
