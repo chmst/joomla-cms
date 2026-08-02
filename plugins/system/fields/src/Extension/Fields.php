@@ -53,6 +53,8 @@ final class Fields extends CMSPlugin implements SubscriberInterface
             'onContentAfterTitle'           => 'onContentAfterTitle',
             'onContentBeforeDisplay'        => 'onContentBeforeDisplay',
             'onContentAfterDisplay'         => 'onContentAfterDisplay',
+            'onContentAfterFulltext'        => 'onContentAfterFulltext',
+            'onContentAfterIntrotext'       => 'onContentAfterIntrotext',
         ];
     }
 
@@ -322,6 +324,34 @@ final class Fields extends CMSPlugin implements SubscriberInterface
         }
 
         FieldsHelper::prepareForm($parts[0] . '.' . $parts[1], $form, $data);
+    }
+
+    /**
+     * The display event.
+     *
+     * @param   Content\AfterFulltextEvent  $event  The event object
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION_
+     */
+    public function onContentAfterFulltext(Content\AfterFulltextEvent $event)
+    {
+        $event->addResult($this->display($event->getContext(), $event->getItem(), $event->getParams(), 4));
+    }
+
+    /**
+     * The display event.
+     *
+     * @param   Content\AfterIntrotextEvent  $event  The event object
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION_
+     */
+    public function onContentAfterIntrotext(Content\AfterIntrotextEvent $event)
+    {
+        $event->addResult($this->display($event->getContext(), $event->getItem(), $event->getParams(), 4));
     }
 
     /**

@@ -11,6 +11,7 @@
 namespace Joomla\Component\Content\Site\View\Category;
 
 use Joomla\CMS\Event\Content\AfterDisplayEvent;
+use Joomla\CMS\Event\Content\AfterIntrotextEvent;
 use Joomla\CMS\Event\Content\AfterTitleEvent;
 use Joomla\CMS\Event\Content\BeforeDisplayEvent;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
@@ -134,9 +135,10 @@ class HtmlView extends CategoryView
             $item->introtext = $item->text;
 
             $contentEvents = [
-                'afterDisplayTitle'    => new AfterTitleEvent('onContentAfterTitle', $contentEventArguments),
-                'beforeDisplayContent' => new BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments),
-                'afterDisplayContent'  => new AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments),
+                'afterDisplayTitle'     => new AfterTitleEvent('onContentAfterTitle', $contentEventArguments),
+                'beforeDisplayContent'  => new BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments),
+                'afterDisplayContent'   => new AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments),
+                'afterDisplayIntrotext' => new AfterIntrotextEvent('onContentAfterIntrotext', $contentEventArguments),
             ];
 
             foreach ($contentEvents as $resultKey => $event) {

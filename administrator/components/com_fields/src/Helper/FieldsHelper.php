@@ -99,7 +99,7 @@ class FieldsHelper
      *
      * @param   string             $context              The context of the content passed to the helper
      * @param   object|array|null  $item                 The item being edited in the form
-     * @param   int|bool           $prepareValue         (if int is display event): 1 - AfterTitle, 2 - BeforeDisplay, 3 - AfterDisplay, 0 - OFF
+     * @param   int|bool           $prepareValue         (if int is display event): 1 - AfterTitle, 2 - BeforeDisplay, 3 - AfterDisplay, 4 - AfterFulltext, 5 - AfterIntrotext, 0 - OFF
      * @param   ?array             $valuesToOverride     The values to override
      * @param   bool               $includeSubformFields Should I include fields marked as Only Use In Subform?
      *
@@ -206,7 +206,7 @@ class FieldsHelper
 
                 $field->rawvalue = $field->value;
 
-                // If boolean prepare, if int, it is the event type: 1 - After Title, 2 - Before Display Content, 3 - After Display Content, 0 - Do not prepare
+                // If boolean prepare, if int, it is the event type: 1 - After Title, 2 - Before Display Content, 3 - After Display Content, 4 - After Fulltext, 5 - AfterIntrotext, 0 - Do not prepare
                 if ($prepareValue && (\is_bool($prepareValue) || $prepareValue === (int) $field->params->get('display', '2'))) {
                     /*
                      * On before field prepare

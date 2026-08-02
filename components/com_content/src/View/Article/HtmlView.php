@@ -245,6 +245,7 @@ class HtmlView extends BaseHtmlView
             'afterDisplayTitle'    => new Content\AfterTitleEvent('onContentAfterTitle', $contentEventArguments),
             'beforeDisplayContent' => new Content\BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments),
             'afterDisplayContent'  => new Content\AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments),
+            'afterDisplayFulltext' => new Content\AfterFulltextEvent('onContentAfterFulltext', $contentEventArguments),
         ];
 
         foreach ($contentEvents as $resultKey => $event) {
