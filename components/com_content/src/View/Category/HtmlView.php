@@ -11,7 +11,7 @@
 namespace Joomla\Component\Content\Site\View\Category;
 
 use Joomla\CMS\Event\Content\AfterDisplayEvent;
-use Joomla\CMS\Event\Content\AfterIntrotextEvent;
+use Joomla\CMS\Event\Content\AfterIntrotextEvent;   
 use Joomla\CMS\Event\Content\AfterTitleEvent;
 use Joomla\CMS\Event\Content\BeforeDisplayEvent;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;

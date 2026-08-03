@@ -351,7 +351,7 @@ final class Fields extends CMSPlugin implements SubscriberInterface
      */
     public function onContentAfterIntrotext(Content\AfterIntrotextEvent $event)
     {
-        $event->addResult($this->display($event->getContext(), $event->getItem(), $event->getParams(), 4));
+        $event->addResult($this->display($event->getContext(), $event->getItem(), $event->getParams(), 5));
     }
 
     /**

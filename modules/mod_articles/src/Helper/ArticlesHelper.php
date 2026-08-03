@@ -354,6 +354,8 @@ class ArticlesHelper implements DatabaseAwareInterface
                     'afterDisplayTitle'    => new Content\AfterTitleEvent('onContentAfterTitle', $contentEventArguments),
                     'beforeDisplayContent' => new Content\BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments),
                     'afterDisplayContent'  => new Content\AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments),
+                    'afterFulltextContent' => new Content\AfterFulltextEvent('onContentAfterFulltext', $contentEventArguments),
+                    'afterIntrotextContent' => new Content\AfterIntrotextEvent('onContentAfterIntrotext', $contentEventArguments),
                 ];
 
                 foreach ($contentEvents as $resultKey => $event) {
@@ -366,6 +368,8 @@ class ArticlesHelper implements DatabaseAwareInterface
                 $item->event->afterDisplayTitle    = '';
                 $item->event->beforeDisplayContent = '';
                 $item->event->afterDisplayContent  = '';
+                $item->event->afterFulltextContent = '';
+                $item->event->afterIntrotextContent  = '';
             }
 
             // Used for styling the active article

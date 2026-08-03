@@ -93,10 +93,12 @@ trait CoreEventAware
         // Plugin: Stats
         'onGetStatsData' => Plugin\System\Stats\GetStatsDataEvent::class,
         // Content
-        'onContentPrepare'       => Content\ContentPrepareEvent::class,
-        'onContentAfterTitle'    => Content\AfterTitleEvent::class,
-        'onContentBeforeDisplay' => Content\BeforeDisplayEvent::class,
-        'onContentAfterDisplay'  => Content\AfterDisplayEvent::class,
+        'onContentPrepare'        => Content\ContentPrepareEvent::class,
+        'onContentAfterTitle'     => Content\AfterTitleEvent::class,
+        'onContentBeforeDisplay'  => Content\BeforeDisplayEvent::class,
+        'onContentAfterDisplay'   => Content\AfterDisplayEvent::class,
+        'onContentAfterFulltext'  => Content\AfterFulltextEvent::class,
+        'onContentAfterIntrotext' => Content\AfterIntrotextEvent::class,
         // Model
         'onContentNormaliseRequestData' => Model\NormaliseRequestDataEvent::class,
         'onContentBeforeValidateData'   => Model\BeforeValidateDataEvent::class,
